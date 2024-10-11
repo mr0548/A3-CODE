@@ -1,0 +1,59 @@
+html {
+	background:#f9f8f5;
+}
+#user-box {
+	margin:200px auto;
+	width:370px;
+}
+#user-box .box-main {
+	margin-top:15px;
+}
+#user-box .box-main p input {
+	font-weight: bold;
+	width:326px;
+	padding-left:10px;
+	font-size: 16px;
+	height: 50px;
+	line-height: 50px;
+	border: 2px solid #e6e6dc;
+}
+#user-box .box-main p input {
+	padding: 0 20px;
+	vertical-align: middle;
+	font-weight: normal;
+}
+
+#user-box .user-action-button {
+	height:40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: #75ab00;
+	color:#fff;
+	font-weight: bold;
+	display: block;
+	font-size: 14px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+#user-box a.user-action-button.disabled:active,
+#user-box a.user-action-button.disabled:hover,
+#user-box a.user-action-button.disabled{
+	background-color: #ccc;
+	color: #fff;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+#user-box a:hover.user-action-button {
+	text-decoration: none;
+	background-color: #6fa004;
+}
+#user-box a.user-action-button.trans {
+	background:#ccc;
+	color:#fff;
+	cursor: default;
+}
+#user-box a:active.user-action-button {
+	box-shadow:inset 2px 2px 3px #557b01;
+}
