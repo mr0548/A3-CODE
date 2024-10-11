@@ -1,0 +1,126 @@
+html,body {
+  font:14px/1.6 -apple-system,BlinkMacSystemFont,Roboto,Ubuntu,Helvetica Neue,Helvetica,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Source Han Sans CN,sans-serif;
+  background: #fff;
+}
+#header {
+  margin: 0 auto;
+  position: relative;
+}
+#header .header-wrap {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0 0 0;
+}
+
+#hang {
+  width: 100%;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 0.97);
+  z-index: 1000;
+  position: fixed;
+  height: 70px;
+  color: #666;
+}
+#hang .header-wrap {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 13px 0 0 0;
+}
+#hang .page-nav {
+  float: right;
+}
+#hang .page-nav,
+#header .page-nav {
+  float:right;
+}
+#hang .page-nav > ul,
+#header .page-nav > ul {
+  margin-bottom:20px;
+}
+#hang .page-nav > ul > li,
+#header .page-nav > ul > li {
+  float:left;
+  margin-left:35px;
+  height:50px;
+  line-height:45px;
+}
+#hang .page-nav > ul > li a {
+  color: #666;
+  display: inline-block;
+  font-weight: 200;
+}
+#header .page-nav > ul > li a {
+  display:inline-block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size:14px;
+  font-weight: 200;
+}
+#hang .page-nav > ul > li a:hover,
+#header .page-nav > ul > li a:hover {
+  text-decoration: none;
+  color: #54b61c;
+}
+#hang .page-nav > ul > li.login a,
+#header .page-nav > ul > li.login a {
+  color: #54b61c;
+  border: 1px solid #54b61c;
+  border-radius: 3px;
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+#hang .page-nav > ul > li.login a:hover,
+#header .page-nav > ul > li.login a:hover {
+  color: #fff;
+  background-color: #54b61c;
+  text-decoration: none;
+}
+#view {
+  height: 80px;
+  background-color: #002426;
+  overflow: hidden;
+}
+#apply {
+  width:100%;
+  overflow:hidden;
+}
+#apply .apply-wrap {
+  width:1000px;
+  margin:0 auto;
+  height:260px;
+  overflow:hidden;
+  text-align:center;
+}
+#apply .apply-wrap h3 {
+  color:#353535;
+  text-align:center;
+  font-size:56px;
+  margin-top: 105px;
+  font-weight: 200;
+}
+#apply .apply-wrap a {
+  display:inline-block;
+  background-color: #54b61c;
+  color: #fff;
+  border-radius: 3px;
+  margin-top:15px;
+  width:180px;
+  height:40px;
+  line-height:40px;
+  font-size: 16px;
+  font-weight: 200;
+}
+#apply .apply-wrap a:hover {
+  text-decoration: none;
+  background-color: rgba(35, 82, 9, 1);
+}
+#apply img {
+  width: 70%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
