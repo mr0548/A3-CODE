@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Donate</title>
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <link rel="stylesheet" type="text/css" href="css/global.css" />
+    <link rel="stylesheet" type="text/css" href="css/case-common.css" />
+    <link rel="stylesheet" type="text/css" href="css/donate.css" />
+</head>
+
+<body>
+    <div id="view">
+        <header id="header">
+            <div class="header-wrap fn-clear">
+                <div class="page-nav">
+                    <ul class="fn-clear">
+                        <li><a href="./home.html">Home</a></li>
+                        <li><a href="./category.html">Fundraiser</a></li>
+                        <li><a href="./about.html">About</a></li>
+                        <li><a href="./login.html">Sign in</a></li>
+                        <li class="login"><a class="ui-button-green" href="javascript:;">Start a GoFoundMe</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+    <div id="intro" style="padding-top: 20px;background-color: transparent;">
+        <div class="donate-content">
+            <div class="top">
+                <p>Choose your donation amount for</p>
+                <p id="caption-text" class="caption"></p>
+                <img id="fundraiser-img" src="" alt="">
+            </div>
+            <div class="form">
+                <p class="title">Enter your donation</p>
+                <div class="amount">
+                    <div class="inputBox">
+                        <input id="amount" required="" type="text">
+                        <span>Amount</span>
+                    </div>
+                </div>
+                <p class="title">Enter your name</p>
+                <div class="name">
+                    <div class="inputBox">
+                        <input id="first-name" required="" type="text">
+                        <span>First name</span>
+                    </div>
+                    <div class="inputBox">
+                        <input id="last-name" required="" type="text">
+                        <span>Last name</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-donate" onclick="donate()">Donate now</button>
+        </div>
+    </div>
+    <script>
+        let fundraiser_id = ''
+        let current = null
+        window.onload = function () {
+            getId()
+        }
+        function getId() {
+            var url = location.search;
+            if (url.indexOf("?") != -1) {
+                var text = url.substr(1);
+                ids = text.split("=");
+                getDetail(ids[1])
+            }
+        }
+        function getDetail(id) {
+            fundraiser_id = id
+            const caption = document.querySelector('#caption')
+            const image = document.querySelector('#image')
+            const desc = document.querySelector('#desc')
+            const funding = document.querySelector('#funding')
+            const line = document.querySelector('#line')
+            fetch('http://localhost:8085/fundraiser/' + id).then(res => {
+                return res.json()
+            }).then(response => {
+                const caption = document.querySelector('#caption-text')
+                const image = document.querySelector('#fundraiser-img')
+                var data = response.data[0]
+                caption.innerHTML = data.CAPTION
+                image.src = data.IMAGEURL
+                current = data.CURRENT_FUNDING
+            })
+        }
+        function donate() {
+            const amount = document.querySelector('#amount').value
+            const first = document.querySelector('#first-name').value
+            const last = document.querySelector('#last-name').value
+            if(amount=='' || first=='' || last=='' || amount == null || first == null || last == null) {
+                alert('Please provide complete donation information!')
+            } else if (Number(amount) < 5) {
+                alert('Minimum donation of 5 AUD!')
+            } else {
+                const data = {
+                    id: fundraiser_id,
+                    amount: amount,
+                    user: first + '-' + last,
+                    date: new Date().toLocaleString(),
+                    newCurrent: Number(current) + Number(amount)
+                }
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost:8085/donation', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.error('请求失败：', xhr.status);
+                    }
+                };
+                xhr.send(JSON.stringify(data));
+                window.location.href='./inner.html?id='+fundraiser_id
+            }
+        }
+    </script>
+</body>
+
+</html>
