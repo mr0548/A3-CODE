@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>DonateInner</title>
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <link rel="stylesheet" type="text/css" href="css/global.css" />
+    <link rel="stylesheet" type="text/css" href="css/case-common.css" />
+  </head>
+<body>
+    <div id="view">
+      <header id="header">
+        <div class="header-wrap fn-clear">
+          <div class="page-nav">
+            <ul class="fn-clear">
+              <li><a href="./home.html">Home</a></li>
+              <li><a href="./category.html">Fundraiser</a></li>
+              <li><a href="./about.html">About</a></li>
+              <li><a href="./login.html">Sign in</a></li>
+              <li class="login"><a class="ui-button-green" href="javascript:;">Start a GoFoundMe</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+    </div>
+    <div id="intro">
+      <div class="intro-hd">
+        <h2 id="caption" class="case-title"></h2>
+        <div class="container">
+          <div class="left">
+            <img id="image" src="" alt="">
+            <div id="desc" class="text"></div>
+          </div>
+          <div class="right">
+            <p id="funding" class="goal"></p>
+            <div id="line" class="outer">
+              <div class="inner"></div>
+            </div>
+            <button class="share"><span class="text">Share</span></button>
+            <button class="btn-donate" onclick="donate()">Donate now</button>
+            <div id="list" class="donate-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let fundraiser_id = ''
+      window.onload = function() {
+        getId()
+      }
+      function getId() {
+        var url = location.search;
+        if (url.indexOf("?") != -1) {
+          var text = url.substr(1);
+          ids = text.split("=");
+          getDetail(ids[1])
+        }
+      }
+      function getDetail(id) {
+        fundraiser_id = id
+        const caption = document.querySelector('#caption')
+        const image = document.querySelector('#image')
+        const desc = document.querySelector('#desc')
+        const funding = document.querySelector('#funding')
+        const line = document.querySelector('#line')
+        fetch('http://localhost:8085/fundraiser/' + id).then(res => {
+          return res.json()
+        }).then(response => {
+          const data = response.data[0]
+          caption.innerHTML = data.CAPTION
+          image.src = data.URL
+          desc.innerHTML = data.DESCRIBE
+          funding.innerHTML = `<span class="current"> $` + data.CURRENT_FUNDING + ` </span> raised of $` + data.TARGET_FUNDING + ` goal`
+          line.innerHTML = `<div style="max-width: 100%; width: ` + ((data.CURRENT_FUNDING / data.TARGET_FUNDING)) * 100 + `%;" class="inner"></div>`
+          donateList(id)
+        })
+      }
+      function donate() {
+        window.location.href = 'donate.html?id='+fundraiser_id
+      }
+      function donateList(id) {
+        fetch('http://localhost:8085/donateData/' + id).then(res => {
+          return res.json()
+        }).then(response => {
+          var data = response.data
+          const list = document.querySelector('#list')
+          let text = ''
+          data.forEach(item => {
+            text += `
+                <div class="donate-item">
+                  <span class="name">`+ item.GIVER + `</span>
+                  <span class="amount">$`+ item.AMOUNT + `</span>
+                </div>
+              `
+          })
+          list.innerHTML = text
+        })
+      }
+    </script>
+  </body>
+
+</html>

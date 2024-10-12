@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Social Impact Funds</title>
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <link rel="stylesheet" type="text/css" href="css/cases.css" />
+  </head>
+<body>
+    <div id="view">
+      <header id="header">
+        <div class="header-wrap fn-clear">
+          <div class="page-nav">
+            <ul class="fn-clear">
+              <li><a href="./home.html">Home</a></li>
+              <li><a href="./category.html">Fundraiser</a></li>
+              <li><a href="./about.html">About</a></li>
+              <li><a href="./login.html">Sign in</a></li>
+              <li class="login"><a class="ui-button-green" href="javascript:;">Start a GoFoundMe</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div id="intro" class="fn-clear">
+        <h5 class="cases-title">Leading crowdfunding platform</h5>
+        <h2 class="cases-title">Your home for help</h2>
+      </div>
+    </div>
+    <div id="cases-list">
+      <ul id="list" class="fn-clear">
+        
+      </ul>
+    </div>
+    <script>
+        (function () {
+          getQuery()
+        })()
+        function getQuery() {
+          const queryString = window.location.search;
+          const urlParams = new URLSearchParams(queryString);
+          const category = urlParams.get('category');
+          const organizer = urlParams.get('organizer');
+          getList(category, organizer)
+        }
+        function getList(category, organizer) {
+          fetch(`http://localhost:8085/search?category=${category}&organizer=${organizer}`).then(res => {
+            return res.json()
+          }).then(response => {
+            const data = response.data
+            const list = document.querySelector('#list')
+            let text = ''
+            if (data.length) {
+              data.forEach(element => {
+                text += `
+                  <li class="cases-item fn-left">
+                    <a href="./inner.html?id=`+ element.FUNDRAISER_ID + `" class="cases-item-content">
+                      <div class="case-logo">
+                        <img src="`+ element.URL + `" />
+                      </div>
+                      <h3 class="case-item-title">`+ element.CAPTION + `</h3>
+                      <h6 class="case-item-name">`+ element.ORGANIZER + `</h6>
+                      <div class="case-item-des">`+ element.DESCRIBE + `</div>
+                      <p style="color: red;"><span>Target:</span>$`+ element.TARGET_FUNDING + `</p>
+                      <p style="color: green;"><span>Current:</span>$`+ element.CURRENT_FUNDING + `</p>
+                      <p style="color: blue;"><span>City:</span>`+ element.CITY + `</p>
+                      <p><span>Active:</span>`+ (element.ACTIVE == 1 ? 'ACTIVE' : 'SUSPENDED') + `</p>
+                      <p><span>Category:</span>`+ element.NAME + `</p>
+                    </a>
+                  </li>
+                `
+              });
+            } else {
+              text = '<div class="red-line"></div>'
+            }
+            list.innerHTML = text
+          })
+        }
+    </script>
+  </body>
+</html>
