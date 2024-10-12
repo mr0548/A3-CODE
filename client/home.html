@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Home</title>
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <link rel="stylesheet" type="text/css" href="css/global.css" />
+    <link rel="stylesheet" type="text/css" href="css/home.css" />
+  </head>
+<body>
+    <div id="view">
+      <header id="header">
+        <div class="header-wrap fn-clear">
+          <div class="page-nav">
+            <ul class="fn-clear">
+              <li><a href="./home.html">Home</a></li>
+              <li><a href="./category.html">Fundraiser</a></li>
+              <li><a href="./about.html">About</a></li>
+              <li><a href="./login.html">Sign in</a></li>
+              <li class="login"><a class="ui-button-green" href="javascript:;">Start a GoFoundMe</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div id="intro" class="fn-clear">
+        <div class="title-content fn-left">
+          <h2 class="title">Your home for help</h2>
+          <p class="des">Leading crowdfunding platform</p>
+        </div>
+        <div class="logo-content fn-right">
+          <div class="logo">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="functions">
+      <div class="function-item conten-display">
+        <h2 class="function-title">Discover fundraisers inspired by what you care about</h2>
+        <div class="function-item-content">
+          <div id="detail-list" class="function-detail-list fn-clear">
+          </div>
+        </div>
+      </div>
+      <div class="function-item">
+        <div class="function-item-content">
+          <div class="item-content-hd">
+            <p class="des">We've got you covered.</p>
+            <p class="des">GoFundMe is a trusted leader in online fundraising. With simple pricing and a team of Trust & Safety experts in your
+            corner, you can raise money or make a donation with peace of mind.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function() {
+        getFundariser()
+      })()
+      function getFundariser() {
+        fetch(`http://localhost:8085/search?status=1`).then(res => {
+          return res.json()
+        }).then(response => {
+          const data = response.data.slice(0, 2)
+          const list = document.querySelector('#detail-list')
+          let text = ''
+          data.forEach(element => {
+            text += `
+              <li class="detail-item site fn-left detail-item-common">
+                <div class="detail-item-hd">
+                  <div class="fn-clear">
+                    <div class="function-logo-content fn-left">
+                      <div class="title">`+ element.CAPTION + `</div>
+                    </div>
+                    <div class="function-action fn-right">
+                      <ul>
+                        <li><a href="./inner.html?id=`+ element.FUNDRAISER_ID + `">了解详情</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-item-bd">
+                  <p>Organizer: `+ element.ORGANIZER + `</p>
+                  <p>TargetFund: `+ element.TARGET_FUNDING + `</p>
+                  <p>CurrentFund: `+ element.CURRENT_FUNDING + `</p>
+                  <p>Status: `+ (element.ACTIVE == 1 ? 'ACTIVE' : 'SUSPENDED') + `</p>
+                  <p>City: `+ element.CITY + `</p>
+                  <p>Category: `+ element.NAME + `</p>
+                </div>
+              </li>
+              `
+          });
+          list.innerHTML = text
+        })
+      }
+    </script>
+  </body>
+</html>
