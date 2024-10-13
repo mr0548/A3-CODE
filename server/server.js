@@ -20,7 +20,7 @@ server.all('*', function (req, res, next) {
     next();
 });
 
-server.use(router);
+server.use('/api', router);
 
 server.listen(port, (err) => {
     if (!err) {
