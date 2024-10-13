@@ -39,7 +39,7 @@
                 <p class="title">Enter your donation</p>
                 <div class="amount">
                     <div class="inputBox">
-                        <input id="amount" required="" type="text">
+                        <input id="amount" required="" type="number">
                         <span>Amount</span>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                 const image = document.querySelector('#fundraiser-img')
                 var data = response.data[0]
                 caption.innerHTML = data.CAPTION
-                image.src = data.IMAGEURL
+                image.src = data.URL
                 current = data.CURRENT_FUNDING
             })
         }
