@@ -14,7 +14,7 @@
         <div class="header-wrap fn-clear">
           <div class="page-nav">
             <ul class="fn-clear">
-              <li><a href="./home.html">Home</a></li>
+              <li><a href="./index.html">Home</a></li>
               <li><a href="./category.html">Fundraiser</a></li>
               <li><a href="./about.html">About</a></li>
               <li><a href="./login.html">Sign in</a></li>
@@ -45,7 +45,7 @@
           getList(category, organizer)
         }
         function getList(category, organizer) {
-          fetch(`http://localhost:8085/search?category=${category}&organizer=${organizer}`).then(res => {
+          fetch(`https://24274818.it.scu.edu.au/api/search?category=${category}&organizer=${organizer}`).then(res => {
             return res.json()
           }).then(response => {
             const data = response.data

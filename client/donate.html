@@ -18,7 +18,7 @@
             <div class="header-wrap fn-clear">
                 <div class="page-nav">
                     <ul class="fn-clear">
-                        <li><a href="./home.html">Home</a></li>
+                        <li><a href="./index.html">Home</a></li>
                         <li><a href="./category.html">Fundraiser</a></li>
                         <li><a href="./about.html">About</a></li>
                         <li><a href="./login.html">Sign in</a></li>
@@ -39,7 +39,7 @@
                 <p class="title">Enter your donation</p>
                 <div class="amount">
                     <div class="inputBox">
-                        <input id="amount" required="" type="number">
+                        <input id="amount" required="" type="text">
                         <span>Amount</span>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             const desc = document.querySelector('#desc')
             const funding = document.querySelector('#funding')
             const line = document.querySelector('#line')
-            fetch('http://localhost:8085/fundraiser/' + id).then(res => {
+            fetch('https://24274818.it.scu.edu.au/api/fundraiser/' + id).then(res => {
                 return res.json()
             }).then(response => {
                 const caption = document.querySelector('#caption-text')
@@ -107,7 +107,7 @@
                     newCurrent: Number(current) + Number(amount)
                 }
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'http://localhost:8085/donation', true);
+                xhr.open('POST', 'https://24274818.it.scu.edu.au/api/donation', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.onload = function () {
                     if (xhr.status === 200) {

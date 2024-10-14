@@ -15,7 +15,7 @@
         <div class="header-wrap fn-clear">
           <div class="page-nav">
             <ul class="fn-clear">
-              <li><a href="./home.html">Home</a></li>
+              <li><a href="./index.html">Home</a></li>
               <li><a href="./category.html">Fundraiser</a></li>
               <li><a href="./about.html">About</a></li>
               <li><a href="./login.html">Sign in</a></li>
@@ -65,7 +65,7 @@
         const desc = document.querySelector('#desc')
         const funding = document.querySelector('#funding')
         const line = document.querySelector('#line')
-        fetch('http://localhost:8085/fundraiser/' + id).then(res => {
+        fetch('https://24274818.it.scu.edu.au/api/fundraiser/' + id).then(res => {
           return res.json()
         }).then(response => {
           const data = response.data[0]
@@ -81,7 +81,7 @@
         window.location.href = 'donate.html?id='+fundraiser_id
       }
       function donateList(id) {
-        fetch('http://localhost:8085/donateData/' + id).then(res => {
+        fetch('https://24274818.it.scu.edu.au/api/donateData/' + id).then(res => {
           return res.json()
         }).then(response => {
           var data = response.data
